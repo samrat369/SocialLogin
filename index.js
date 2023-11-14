@@ -47,7 +47,7 @@ passport.serializeUser(function(user, cb) {
 passport.use(new GoogleStrategy({
     clientID: "565331886241-8ipi26c0k6sh42iefhj6gfrqhu76vp1c.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://accessmanagementlabfoundationsociallogin.onrender.com/auth/google/callback"
 }, (token, tokenSecret, profile, done) => {
     // Your authentication logic here
     userProfile=profile;

@@ -134,7 +134,7 @@ app.get('/logout', (req, res) => {
                     console.error('Error destroying session:', err);
                 }
                 res.clearCookie('connect.sid');
-                res.redirect('/login');
+                res.redirect('https://mukul1098.pythonanywhere.com/');
             });
         });
         

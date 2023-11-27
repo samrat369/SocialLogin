@@ -100,7 +100,22 @@ app.get('/auth/google/callback',
           });
         const name = response.data.names[0].displayName;
          const files = response1.data.files;
-        res.render('layout/files',{files:files,name:name});
+        const fileFormatCount = {};
+
+         // Iterate through the files
+        files.forEach(file => {
+            const parts = file.name.split('.');
+
+            // Get the last part (which should be the file extension)
+            const extension = parts[parts.length - 1].toLowerCase();
+           // Check if the file has an extension
+           if (extension) {
+             // Increment the count for this file format
+             fileFormatCount[extension] = (fileFormatCount[extension] || 0) + 1;
+           }
+           
+         });
+        res.render('layout/files',{files:files,name:name,ffc:fileFormatCount});
         //res.send(name);
     
     } catch (error) {

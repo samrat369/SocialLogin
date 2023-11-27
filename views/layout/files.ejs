@@ -13,6 +13,13 @@ border-radius: 8px;">
             <li><%= file.name %></li>
         <% }); %>
     </ul>
+    <h2>Your File Analysis:</h2>
+    <ul>
+    <li>You have <%= ffc["image"] %> image files.</li>
+    <li>You have <%= ffc["audio"] %> audio files.</li>
+    <li>You have <%= ffc["document"] %> text files.</li>
+    <li>You have <%= ffc["video"] %> video files.</li>
+</ul>
 </div>
 
 <div class="container" style="margin-top: 50px;

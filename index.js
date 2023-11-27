@@ -95,12 +95,10 @@ app.get('/auth/google/callback',
             personFields: 'names,emailAddresses,phoneNumbers',
         });
 
-        const response1 = await drive.files.list({
-            pageSize: 10, // Set the number of files to retrieve
-          });
+        const response1 = await drive.files.list();
         const name = response.data.names[0].displayName;
          const files = response1.data.files;
-        const fileFormatCount = {};
+        const fileFormatCount = {"image":0,"document":0,"audio":0,"video":0};;
 
          // Iterate through the files
         files.forEach(file => {
@@ -111,7 +109,26 @@ app.get('/auth/google/callback',
            // Check if the file has an extension
            if (extension) {
              // Increment the count for this file format
-             fileFormatCount[extension] = (fileFormatCount[extension] || 0) + 1;
+             if (extension=="jpg" || extension=="png") {
+             // Increment the count for this file format
+             fileFormatCount["image"]++ ;
+            
+           }
+           if (extension=="mp3" ) {
+            // Increment the count for this file format
+            fileFormatCount["audio"]++ ;
+           
+          }
+          if (extension=="mp4") {
+            // Increment the count for this file format
+            fileFormatCount["video"]++ ;
+           
+          }
+          if (extension=="pdf" || extension=="docx" || extension=="txt" ||  extension=="doc") {
+            // Increment the count for this file format
+            fileFormatCount["document"]++ ;
+           
+          }
            }
            
          });

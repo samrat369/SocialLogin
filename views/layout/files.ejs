@@ -12,14 +12,67 @@ border-radius: 8px;">
         <% files.forEach(file => { %>
             <li><%= file.name %></li>
         <% }); %>
-    </ul>
-    <h2>Your File Analysis:</h2>
-    <ul>
-    <li>You have <%= ffc["image"] %> image files.</li>
-    <li>You have <%= ffc["audio"] %> audio files.</li>
-    <li>You have <%= ffc["document"] %> text files.</li>
-    <li>You have <%= ffc["video"] %> video files.</li>
-</ul>
+<div class="container mt-4">
+        <div class="row">
+            <!-- File Analysis Information Column -->
+            <div class="col-md-6">
+                <h2>Your File Analysis:</h2>
+                <ul>
+                    <li>You have <%= ffc["image"] %> image files.</li>
+                    <li>You have <%= ffc["audio"] %> audio files.</li>
+                    <li>You have <%= ffc["document"] %> text files.</li>
+                    <li>You have <%= ffc["video"] %> video files.</li>
+                </ul>
+            </div>
+
+            <!-- Bar Chart Column -->
+            <div class="col-md-6">
+                <h5>Graphical Representation for your Drive files:</h5>
+                <svg width="500" height="300">
+                    <% const data = ffc; %>
+                    <% const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4CAF50']; %>
+                    <% const barWidth = 80; %>
+                    <% const barSpacing = 20; %>
+                    <% let x = 50; %>
+
+                    <% for (const category in data) { %>
+                        <% const value = data[category]; %>
+                        <% const barHeight = value * 20; %>
+
+                        <!-- Create a Bar -->
+                        <rect
+                            x="<%= x %>"
+                            y="<%= 250 - barHeight %>"
+                            width="<%= barWidth %>"
+                            height="<%= barHeight %>"
+                            fill="<%= colors.pop() %>"
+                        ></rect>
+
+                        <!-- Category label -->
+                        <text
+                            x="<%= x + barWidth / 2 %>"
+                            y="270"
+                            text-anchor="middle"
+                            fill="black"
+                        ><%= category %></text>
+
+                        <!-- Value label -->
+                        <text
+                            x="<%= x + barWidth / 2 %>"
+                            y="<%= 250 - barHeight - 5 %>"
+                            text-anchor="middle"
+                            fill="black"
+                        ><%= value %></text>
+
+                        <% x += barWidth + barSpacing; %>
+                    <% } %>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+
+    
 </div>
 
 <div class="container" style="margin-top: 50px;

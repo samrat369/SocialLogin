@@ -10,3 +10,174 @@ border-radius: 8px;">
     <p>Please log in using your Google account:</p>
     <a href="/auth/google" class="btn btn-primary" style="background-color:#af0d45; color:#e6fb0b">Login with Google</a>
 </div>
+<div class="container" style="margin-top: 50px;
+background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+padding: 20px; /* Add padding to control the size */
+border-radius: 8px; text-align: center;">
+    <h1 style="color:#af0d45"> Lets take a look at the flow of the entire process:-</h1>
+    <div class="container" style="display: flex;margin-top: 50px;
+    background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+    padding: 20px; /* Add padding to control the size */
+    border-radius: 8px;">
+        <figure>
+            <img src="/Flow_Updated.png" alt="My Image" style="height:400px; width:500px; padding:5px ; margin-right: 5px;">
+            <ul><li><figcaption><u>Flowdiagram of the entire social login process</u></figcaption></li></ul>
+        </figure>
+    </div>
+    <div class="card-body">
+        <h3 class="card-title" style="color:#af0d45;">Step 1: <strong>Setup your google oauth client</strong></strong></h3>
+
+        <h5 class="card-text">
+            <ol style="text-align:left;">
+            <li>Create a Project on the Google Cloud Console:
+            <ul>
+                <li>Go to the Google Cloud Console.</li>
+                <li>Click on "Select a project" in the top bar and then click on "New Project."
+                            Fill in the project name and click on "Create."
+                            Enable the Google API for Your Project:</li>
+
+                <li>In the Cloud Console, navigate to the "APIs & Services" > "Library" section.
+                            Search for "Google Drive API" and enable it.
+                            Additionally, enable any other APIs your application needs, such as "Google+ API."</li>
+            </ul></li>
+            <li>Create Credentials:
+                    <ul>
+                            <li>In the Cloud Console, navigate to the "APIs & Services" > "Credentials" section.
+                            Click on "Create Credentials" and select "OAuth client ID."
+                            Choose the application type (Web application for a server-based app) and configure the authorized redirect URIs.
+                            Configure the OAuth Consent Screen:</li>
+
+                            <li>While creating credentials, you'll be prompted to configure the OAuth consent screen.
+                            Add necessary information like the product name, homepage URL, and application logo.
+                            Obtain Client ID and Secret</li> </ul>
+            </li>
+    <li>Once the OAuth client ID is created, you'll be provided with a client ID and client secret. Save these; you'll use them in your Node.js application.</h5>
+    </li></ol>
+    <div class="container" style="display: flex;margin-top: 50px;
+    background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+    padding: 20px; /* Add padding to control the size */
+    border-radius: 8px;">
+        <figure>
+            <img src="/ss1_gdc.png" alt="My Image" style="height:300px; width:400px; padding:5px ; margin-right: 5px;">
+            <ul><li><figcaption><u>Adding test users to the google oauth client</u></figcaption></li></ul>
+        </figure>
+           
+        <figure>
+            <img src="/ss2_gdc.png" alt="My Image" style="height:300px; width:400px; padding:5px ; margin-right: 5px;">
+            <ul><li><figcaption><u>Adding callback url to the google developer console</u></figcaption></li></ul>
+        </figure>
+    </div>
+    </div>
+    
+
+<div class="card-body">
+    <h3 class="card-title" style="color:#af0d45;">Step 2: <strong>Setup your backend NodeJs code</strong></strong></h3>
+
+    <h5 class="card-text">
+        <ol style="text-align:left;">
+        <li>Setup the Passport-google-auth as shown in the figure</li>
+        <li>Fill in the Passport block with the necessary information such as <strong>Client_id, Client_Secret, Callback_Url</strong></li>
+        </ol>
+        <div class="container" style="display: flex;margin-top: 50px;
+        background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+        padding: 20px; /* Add padding to control the size */
+        border-radius: 8px;">
+            <figure>
+                <img src="/ss1_passport.png" alt="My Image" style="height:300px; width:400px; padding:20px ; margin-right: 5px;">
+                <ul><li><figcaption><u>Setup the passport google Oauth block with necessary information</u></figcaption></li></ul>
+            </figure>
+            
+        </div>
+</div>
+<div class="card-body">
+    <h3 class="card-title" style="color:#af0d45;">Step 3: <strong>User Logs in :</strong></strong></h3>
+
+    <h5 class="card-text">
+        <ol style="text-align:left;">
+        
+        <li>User visits the social login application and clicks on the "Login with Google" button.</li>
+        </ol>
+        <div class="container" style="display: flex;margin-top: 50px;
+        background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+        padding: 20px; /* Add padding to control the size */
+        border-radius: 8px; text-align:center">
+            <figure>
+                <img src="/ss1_login.png" alt="My Image" style="height:300px; width:400px; padding:20px ; margin-right: 5px;">
+                <ul><li><figcaption><u>The Login button for google login</u></figcaption></li></ul>
+            </figure>
+            
+        </div>
+</div>
+<div class="card-body">
+    <h3 class="card-title" style="color:#af0d45;">Step 4: <strong>Redirect to Google Authorization Endpoint:</strong></strong></h3>
+
+    <h5 class="card-text" style="white-space: nowrap; /* Prevents text from wrapping */
+    overflow: auto; /* Hides overflowed text */
+    text-overflow: ellipsis;>
+        <ol style="text-align:left;">
+        
+        <li>Our server redirects the user to Google's OAuth 2.0 authorization endpoint.</li>
+        <li>The redirect includes the application's client ID, requested scopes, and a redirect URI.</li>
+        <li>The redirect URI will look like https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?response_type=code&redirect_uri=//YOUR_CALLBACK_URL//&scope=profile%20email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcontacts.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.readonly&client_id=//YOUR_CLIENT_ID//.apps.googleusercontent.com&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow</li>
+        </ol>
+        <div class="container" style="display: flex;margin-top: 50px;
+        background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+        padding: 20px; /* Add padding to control the size */
+        border-radius: 8px;text-align:center">
+            <figure>
+                <img src="/ss1_redirect.png" alt="My Image" style="height:300px; width:400px; padding:20px ; margin-right: 5px;">
+                <ul><li><figcaption><u>The Authorization Redirect Url for Google</u></figcaption></li></ul>
+            </figure>
+            
+        </div>
+</div>
+<div class="card-body">
+    <h3 class="card-title" style="color:#af0d45;">Step 5: <strong>Generate Authorization Code :</strong></strong></h3>
+
+    <h5 class="card-text">
+        <ol style="text-align:left;">
+        
+        <li>User is prompted to grant permissions to the application.</li>
+        <li>Scopes define the access level your application is requesting</li>
+        <li>If the user grants permission, Google redirects the user back to the application's callback URL. (i.e. "https://accessmanagementlabfoundationsociallogin.onrender.com/auth/google/callback")</li>
+        <li>The server receives the callback request, including an authorization code.</li>
+        <li>The Redirect to callback URL will look like : //Your_Redirect_URL//?code=//Your_Authorization_Code//</li>
+    </ol>
+        
+</div>
+<div class="card-body">
+    <h3 class="card-title" style="color:#af0d45;">Step 6: <strong>Exchange Authorization Code for Access Token:</strong></strong></h3>
+
+    <h5 class="card-text">
+        <ol style="text-align:left;">
+        
+        <li>Your server exchanges the authorization code for an access token and a refresh token by making a request to Google's token endpoint.</li>
+        <li>The Google Token endpoint : https://oauth2.googleapis.com/token</li>
+        <li>If the authorization code is valid the access token is generated.</li>
+        <li>The server uses the access token to make requests to Google APIs, like the Google People API or Google Drive API, to fetch user information.</li>
+        <li>User data obtained from Google APIs is stored locally on your server or associated with the user account in your database.</li>
+        <li>A session is initialized, and the user is considered authenticated.</li>
+    </ol>
+        
+</div>
+<div class="card-body">
+    <h3 class="card-title" style="color:#af0d45;">Step 7: <strong>Redirect to the landing page:</strong></strong></h3>
+
+    <h5 class="card-text">
+        <ol style="text-align:left;">
+        <li>Once the user is authenticated , he/she is redirected to the application landing page (i.e https://accessmanagementlabfoundationsociallogin.onrender.com/profile)</li>
+        <li>The user information of his files is shown in the page.</li>
+        </ol>
+        <div class="container" style="display: flex;margin-top: 50px;
+        background-color: rgba(240, 240, 240, 0.3); /* Add your desired background color */
+        padding: 20px; /* Add padding to control the size */
+        border-radius: 8px;">
+            <figure>
+                <img src="/ss1_landing.png" alt="My Image" style="height:300px; width:400px; padding:20px ; margin-right: 5px;">
+                <ul><li><figcaption><u>The landing Page</u></figcaption></li></ul>
+            </figure>
+            
+        </div>
+</div>
+</div>
+
